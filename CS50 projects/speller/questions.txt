@@ -1,0 +1,54 @@
+0.  "pneumonoultramicroscopicsilicovolcanoconiosis" is a word invented by the president of the 
+     Natioal Puzzler's League, intended to be a synonym for the respiratory disease, "Silicosis"
+
+1.  "getrusage" returns resource usage for the specified process. These resources include
+    * CPU time used (system/user)
+    * memory sizes (shared/data/stack)
+    * page faults
+    * I/O operations
+    
+2.  There are 16 members of the struct rusage
+
+3.  before and after are probably passed by reference in order to optimize the speed of the program; passing by value would
+    require calculate() to declare two rstruc strucs and copy in the appropriate values from before and after.
+    
+    This would incur a performance penalty; passing by reference into pointers would avoid this
+
+4.  main() first checks the argument count (argc) to determine if has been invoked correctly, and if so
+    whether it should use the default dictionary (argc=2) or try to load the dictionary specified by the user (argc=3).
+    It then calls load() to attempt to load the required dictionary.
+    
+    Following this it uses the conditional operator to point the pointer *text at the index of argv[] corresponding to the text 
+    to be spell-checked, and then to open the file using fopen() - assigning the returned value to file pointer *fp.
+    
+    The for-loop declares and initalizes int c with the first character read with fgetc() from the file pointed to by fp.
+    The loop will continue until c is assigned EOF (the "end of file" character), and on each iteration will read another character
+    from file, assigning the value to c.  
+    
+    The first if-statement then checks the value of c, appending the value into the string variable word[] only if c is an
+    alphabetical character or, is an apostrophe AND the current word is already 1 character or more:
+    It uses the int variable "index" in order to track the current length of word[], and
+    to copy c into the appropriate array index of word[]. Index is incremented each time a letter or apostrophe is appended to
+    word[]
+    
+    The nested-if then compares the current length of word[] against the maximum word length set by the #DEFINE LENGTH,
+    If the current word[] is longer than this value, the while statement will continuously read and essentially discard characters
+    from file until the end of the word in file is reached. Index is then set in preparation for a new word.
+    
+    The first else-if detects any numbers read into c, and similar to above, will enter a while-loop to consume any other
+    alphanumeric characters and discard them (ie; they are not copied into word[]).
+    
+    The final else-if is hence triggered only if a non-alphanumeric character (excluding an apostrophe) has been read from file 
+    into c, and the current word is non-zero in length. It appends the character "\0" to word[], generating a valid null-terminated 
+    string. It then increments the variable words (tracking the amount of words found), and passes word[] into check() 
+    (performing getrusage calls before and after) and incrementing the variable misspellings if a false value
+    is returned from check. Index is set to 0 to prepare for next word.
+
+5.  In order to perform validation checks on the string returned by fscanf, it would still be necessary to iterate through each
+    index of word[]; this makes the code reading in the word redundant, which is wasteful of time and memory.
+    
+    Using fscanf could also possibly cause buffer-overflow errors, where a string inside the file to be read from exceeds the
+    declared size of the variable to contain it (eg; word[]).
+    
+6.  The parameters for check and load are set as const in order to prevent those values being changed (either accidentally or
+    intentionally). Changes to the dictionary or the word to be checked would invalidate the results. 

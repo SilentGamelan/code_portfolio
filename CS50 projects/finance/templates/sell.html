@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell Stocks
+{% endblock %}
+
+{% block main %}
+<div class="sell-header">
+    <h3>Selling Shares for {{ display_name }}</h3>
+    {% if not current_portfolio %}
+    <h2>You do not currently own any shares</h2>
+    </div>
+    {% else %}
+    <h5>(price quotes correct at {{ current_portfolio[0]["dt"] }})</h5>
+</div>
+
+<div class="sell-box">
+    <form action="{{ url_for('sell') }}" method="post" id="sell_form">
+        <table>
+            <thead>
+                <tr>
+                    <th class="noborders"></th>
+                    <th> Stock Symbol </th>
+                    <th> Shares Owned </th>
+                    <th> Current PPS </th>
+                    <th> Holding Value </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in current_portfolio %}
+                <tr>
+                    <td class="noborders">
+                        {% if row.stock_symbol == selected %}
+                        <input type="radio" name="radioGroup" value="{{ row.stock_symbol }}" form="sell_form" checked="checked">
+                        {% else %}
+                        <input type="radio" name="radioGroup" value="{{ row.stock_symbol }}" form="sell_form">
+                        {% endif %}
+                    </td>
+                    <td>{{ row.stock_symbol }}</td>
+                    <td>{{ row.shares_owned }}</td>
+                    <td>{{ row.current_pps | usd }}</td>
+                    <td>{{ row.holding_value | usd  }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="noborders"></td><td class="noborders"></td><td class="noborders"></td><td class="noborders"></td>
+                    <td class="noborders">Enter Amount of Shares to Sell</td>
+                    <td>
+                        <div class="input-group">
+                            <input type="hidden" name="radioGroup"/>
+                            <input class="form-control" style="text-align: center; width: 5em;" name="sale_quantity" type="number" value= {{ sale_quantity }} min="0" form="sell_form" placeholder="0">
+                            <button class="btn btn-primary" type="submit" name="routing_msg" value="SELL" form="sell_form">Sell Shares</button>
+                            <button class="btn btn-warning" type="submit" name="routing_msg" value="UPDATE" form="sell_form">Update Prices</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="noborders"></td><td class="noborders"></td><td class="noborders"></td><td class="noborders"></td>
+                    <td class="noborders">Estimated Sale Value</td>
+                </tr>
+                <tr>
+                    <td class="noborders"></td><td class="noborders"></td><td class="noborders"></td><td class="noborders"></td>
+                    {% if sale_value %}
+                    <td class="noborders" style="border-bottom: solid 1px">{{ sale_value | usd }}</td>
+                    {% else %}
+                    <td class ="noborders" style="border-bottom: solid 1px"></td>
+                    {% endif %}
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}
+

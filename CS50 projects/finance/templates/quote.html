@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+<!-- Have tried putting elements without separate containers this time to see how it affects layout -->
+
+    <div class="quote-header">
+        <h3>Enter a stock symbol to recieve a current quote</h3>
+    </div>
+
+    <div class="quote-box">
+        <form action="{{ url_for('quote') }}" method="post">
+            <div class="input-group">
+                <input autocomplete="off" autofocus class="form-control" name="stock_symbol" placeholder="eg; GOOG, TSLA" type="text">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Go!</button>
+                </span>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+
+

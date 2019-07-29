@@ -1,0 +1,62 @@
+1.  stdint.h is a header file which defines "exact width" integer types (ie; in addition to the primitive integer types int, short
+    int, long int). These exact width integer types include int8_t & uint8_t (signed and unsigned 8 bit integers), 
+    int16_t/uint16_t, int32_t/uint32_t, (16 and 32 bit integers), and so on.
+    
+    it also includes uintptr_t and intptr_t - integer types which are guaranteed to hold the value of a pointer.
+    
+    stdint.h allows for easier implementation of code across platforms - this is known as 'portability'. As the sizes of the primitive
+    integers varies from architecture to architecture, and over time (ie; an int may be 4, 8, 16 or longer bytes), code which 
+    assumes int is an 8 bit value may malfunction on a platform on which int is 16 bits.
+    
+    By the use of fixed width types, the programmer can explicitly specify the width intended and make more portable code.
+    
+    There are also macro defined values such as INT8_MAX, which a programmer can use to override the fixed width definition in order
+    to allow code to run on platforms which do not support particular widths. For example, an archiecture may only allow integers
+    of 32 bits or greater. By changing the INT_8MAX macro to 32 bits, all instances of int8_t/int8_t will be replaced with 32 width,
+    which will may allow the code to be compiled without substantial rewriting (dependant upon the logic used withint the program).
+    
+    Other values are also defined within stdint.h, such as intptr_t/uintptr_t and corresponding macro definitions INTPTR_MAX, 
+    INTPTR_MAX, UINTPTR_MAX, that define the sizes of pointers.
+    
+    
+2.  As described above, the use of uint8_t, uint32_t, int32_t, uint16_t (etc), is that it explicitly specifies the width in bits
+    of integers - and so, the maximum values these integers can hold. As the definition of int and unsigned int differs across
+    architectures and time, this enables "future-proofing" and portability across architures where the size of int is different.
+    
+3.  As defined in bmp.h
+    BYTE    1 byte
+    DWORD   4 bytes
+    LONG    4 bytes
+    WORD    2 bytes
+    
+4.  The first two bytes of a (non-OS2) bitmap file must be [BM](ascii) [0x42 0x4D] in hex
+
+5.  bfSize is the size in bytes of the entire bitmap file.
+    
+    biSize is the size in bytes of the structure containing the information about the dimensions and colour format of
+    the bitmap image [BITMAPINFOHEADER]
+    
+6.  If biHeight is negative, it indicates that the bitmap is top-down. This means that its origin point (0,0) is the top-left
+    of the image, ie; the first byte in memory of the image buffer is the top-left pixel of the image, which will work row-by-row
+    from the top of the image to the bottom.
+    
+7.  biBitCount gives the colour-depth for the BMP [contained in BITMAPINFOHEADER]
+
+8.  fopen() might return null at lines 24 and 32 of copy.c if the user has entered filenames which do not correspond to existing
+    files, if the program fails to create an output file, or if permissions settings do not allow files to be opened for
+    reading/writing respectively.
+
+9.  The third argument to fread is always 1 in our code because we want to read the file byte-by-byte - the third argument
+    of fread sets the size of read blocks in bytes
+    
+10. Line 65 of copy.c assigns the value 1 to padding if bi.biWidth = 3 
+    [3*3 (size of RGB_triple) = 9. Add 3 padding to get next multiple of 4: 12]
+
+11. fseek() moves the offset of the filepointer by n bytes, relative to from_where.
+    Positive values of offset moves the pointer forwards, negative values move it backwards
+    Useful values to set from_where are
+        SEEK_CUR - current position of filepointer
+        SEEK_SET - beginning of file
+        SEEK_END - end of file
+    
+12. As above, SEEK_CUR is the current position of the filepointer.

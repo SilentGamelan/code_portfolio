@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Change User Settings
+{% endblock %}
+
+{% block main %}
+
+ <div class="buy-header">
+        <h3>User Settings - Change Password</h3>
+    </div>
+
+<div class="why">
+    <form action= {{ url_for('settings') }} method="POST">
+        <fieldset>
+     <label for="current_pw">Enter current password:</label>
+    <input class="form-control" type="password" name="current_pw" id="current_pw" value="" tabindex="1"><br>
+     <label for="new_pw1">Enter new password:</label>
+    <input class="form-control" type="password" name="new_pw1" id="new_pw1" value="" tabindex="1"><br>
+     <label for="new_pw2">Enter new password (again):</label>
+    <input class="form-control" type="password" name="new_pw2" id="new_pw2" value="" tabindex="1">
+     </fieldset>
+     <div class="form-group">
+        <button class="btn btn-primary btn-md" type="submit">Change Password</button><a href="{{ url_for("index") }}" class="btn btn-warning btn-md">Cancel</a>
+    </div>
+     </form>
+</div>
+
+
+
+{% endblock %}

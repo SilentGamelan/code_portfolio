@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction invoice
+{% endblock %}
+
+{% block main %}
+    <div class="buy_header">
+        <h3>Transaction invoice</h3>
+    </div>
+
+    <div class="invoice-box">
+        <table>
+            <thead>
+                <tr>
+                    <th> Transaction ID</th>
+                    <th> Username </th>
+                    <th> Stock Symbol </th>
+                    <th> Stock Amount </th>
+                    <th> Price Per Share </th>
+                    <th> Transaction Total </th>
+                    <th> Transaction Date </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                     {% for row in invoice %}
+                    <td>{{ invoice.transaction_id }}</td>
+                    <td>{{ invoice.username }}</td>
+                    <td>{{ invoice.stock_symbol }}</td>
+                    <td>{{ invoice.stock_amount }}</td>
+                    <td>{{ invoice.pps  | usd }}</td>
+                    <td>{{ invoice.total | usd }}</td>
+                    <td>{{ invoice.transaction_date }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy Shares
+{% endblock %}
+
+{% block main %}
+
+
+    <div class="buy-header">
+        <h3>Buy Shares</h3>
+        <p style="margin-bottom: 0.25%">Current Funds:   <span class="lead text-muted" style="vertical-align: -5%"> {{ current_funds | usd}} </span></p>
+    </div>
+
+    <div class="buy-box">
+        <form action="{{ url_for('buy') }}" method="post">
+            <fieldset>
+                {# IF-clause = selected if user arrives on buy page from /quote OR update button on this page (buy.html) #}
+                {% if msg %}
+                <p style="margin-bottom: 0.25%">Stock symbol:   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_symbol }} </span></p>
+                <p style="margin-bottom: 0.25%">Stock Name(full):   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_name }} </span></p>
+                <p style="margin-bottom: 0.25%">Stock Price(USD):   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_price | usd}} </span></p>
+                <p style="margin-bottom: 0.25%">No. Shares to buy:   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_amount }} </span></p>
+                <p style="margin-bottom: 0.25%">Total Price(USD):   <span class="lead text-muted" style="vertical-align: -5%"> {{ total_value | usd}} </span></p>
+
+                {# hidden inputs here to store the values passed from quote - note they are displayed above in read-only fashion #}
+                {# this way, they can be rePOSTed if the user decides to buy.                                                    #}
+                <input type="hidden" name="stock_symbol" value = {{ stock_symbol }}>
+                <input type="hidden" name="stock_price" value = {{ stock_price }}>
+                <input type="hidden" name="stock_name" value = {{ stock_name }}>
+                <div class="form-group">
+                    <input class="form-control" autocomplete="off" autofocus name="stock_amount" value="{{ stock_amount }}" placeholder="Amount of shares to buy" type="number" min=0>
+
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" name="routing_msg" value="buy">Buy Shares</button>
+                    <a href="{{ url_for("buy") }}" class="btn btn-danger">Clear Form</a>
+                    <button class="btn btn-warning" type="submit" name="routing_msg" value="update">Update data</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+                {% else %}
+                {# Else = land directly on /buy, not via either /quote or update data button on /buy page #}
+
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="stock_symbol" placeholder="Stock symbol (GOOG, etc)" value="{{ stock_symbol }}" type="text"/>
+                </div>
+                <p style="margin-bottom: 0.25%">Stock symbol:   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_symbol }} </span></p>
+                <p style="margin-bottom: 0.25%">Stock Name(full):   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_name }} </span></p>
+                <p style="margin-bottom: 0.25%">Stock Price(USD):   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_price }} </span></p>
+                <div class="form-group">
+                    <input autocomplete="off" class="form-control" name="stock_amount"  placeholder="Amount of shares to buy" type="number" min = 0 value ="{{ stock_amount }}"/>
+                </div>
+               <p style="margin-bottom: 0.25%">Total Price(USD):   <span class="lead text-muted" style="vertical-align: -5%"> {{ total_value }} </span></p>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" name="routing_msg" value="buy">Buy Shares</button>
+                    <button class="btn btn-warning" type="submit" name="routing_msg" value="update">Update data</button>
+                </div>
+            </fieldset>
+        </form>
+        {% endif %}
+
+    </div>
+{% endblock %}

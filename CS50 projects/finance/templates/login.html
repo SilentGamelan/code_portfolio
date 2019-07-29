@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="login-header">
+            <h2>Log in to begin trading!</h2>
+        </div>
+
+        <div class="login-box">
+            <form action="{{ url_for('login') }}" method="post">
+                <fieldset>
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="password" placeholder="Password" type="password"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="round-btn" type="submit">Log In</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+<!-- I have added this as an extra page to inform the user that the twitter handle submitted was not found, or feed is protected -->
+
+{% extends "layout.html" %}
+
+{% block body %}
+<div>
+    <p style="margin-bottom: 0.25%">Sorry, no tweets found for:   <span class="lead text-muted" style="vertical-align: -5%"> @{{ screen_name }} </span></p>
+    <p style="text-indent: 1em">This user may not exist or may have protected their tweets.</p>
+
+    <div style="margin-top: 2.0%"> <a href="/" class="btn btn-warning">Return to search</a></div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{
+  "name": "fcc-apis-timestamp",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Timestamp validation project for FCC API/Microservices certification",
+  "main": "server.js",
+  "dependencies": {
+    "express": "4.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SilentGamelan/FCC-APIs-Timestamp.git"
+  },
+  "keywords": [
+    "node",
+    "time",
+    "timestamp",
+    "json",
+    "validator"
+  ],
+  "author": "silentgamelan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SilentGamelan/FCC-APIs-Timestamp/issues"
+  },
+  "homepage": "https://github.com/SilentGamelan/FCC-APIs-Timestamp#readme"
+}

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+
+    <div>
+    <p style="margin-bottom: 0.25%">Stock symbol:   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_symbol }} </span></p>
+    <p style="margin-bottom: 0.25%">Stock Name(full):   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_name }} </span></p>
+    <p style="margin-bottom: 0.25%">Stock Price(USD):   <span class="lead text-muted" style="vertical-align: -5%"> {{ stock_price | usd}} </span></p>
+    </div>
+
+{# Uses a hidden form-input "from_quote" to communicate with /buy page.
+     If user wishes to purchase the stock he is currently looking at, it will POST to /buy with from_quote populated with
+     the value of stock_symbol. Note the use of {{ }} without "" required to substitute in the value #}
+    <div>
+        <form role="group" style="margin-top: 2.0%" action="/buy" method="post">
+            <a href="/quote" class="btn btn-warning">Get another quote</a>
+            <input type="hidden" name="stock_symbol" value = {{ stock_symbol }}>
+            <input type="hidden" name="stock_price" value =  {{ stock_price }}>
+            <input type="hidden" name="stock_name" value = {{ stock_name }}>
+            <button input type="submit" class="btn btn-default" name="routing_msg" value="QUOTE">Buy shares in {{stock_name}}</button>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+cc checker/
+collatz/
+cryptography/
+fifteen/
+finance/
+mashup/
+names.txt
+recover/
+resize/
+sentiments/
+speller/
+whodunit/

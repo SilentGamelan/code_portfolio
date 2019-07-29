@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <div class="index-header">
+        {% if stocks_total == 0 %}
+            <h3>You do not currently own any stocks</h3>
+            <p>Current balance: {{ cash_total }}</p>
+        {% else %}
+        <h3>Portfolio value for {{ display_name }} at {{ current_portfolio[0]["dt"] }}</h3>
+    </div>
+
+    <div class="receipt-box">
+
+        <table>
+            <thead>
+                <tr>
+                    <th> Stock Symbol </th>
+                    <th> Shares Owned </th>
+                    <th> Current PPS </th>
+                    <th> Holding Value </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in current_portfolio %}
+                <tr>
+                    <td>{{ row.stock_symbol }}</td>
+                    <td>{{ row.shares_owned }}</td>
+                    <td>{{ row.current_pps | usd }}</td>
+                    <td>{{ row.holding_value | usd  }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr><td class="noborders"></td><td class="noborders"><td class="noborders"></td></td><td>{{ stocks_total | usd }}</td><th>Stocks Total </th></tr>
+                <tr><td class="noborders"></td><td class="noborders"><td class="noborders"></td></td><td>{{ cash_total | usd }}</td><th>Cash Total </th></tr>
+                <tr><td class="noborders"></td><td class="noborders"><td class="noborders"></td></td><td>{{ grand_total | usd}}</td><th>Grand Total </th></tr>
+            </tfoot>
+        </table>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

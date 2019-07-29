@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction invoice
+{% endblock %}
+
+{% block main %}
+    <div class="buy_header">
+        <h3>Transaction invoice</h3>
+    </div>
+
+    <div class="receipt-box">
+        <table>
+            <thead>
+                <tr>
+                    <th> Transaction ID</th>
+                    <th> Username </th>
+                    <th> Stock Symbol </th>
+                    <th> Stock Amount </th>
+                    <th> Price Per Share </th>
+                    <th> Transaction Total </th>
+                    <th> Transaction Date </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {# Need to use for-in to smoothly extract values from list "invoice" passed into page #}
+                    {% for row in invoice %}
+                    <td>{{ row.transaction_id }}</td>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.symbol }}</td>
+                    <td>{{ row.shares_amount }}</td>
+                    <td>{{ row.pps | usd }}</td>
+                    <td>{{ row.total | usd }}</td>
+                    <td>{{ row.transaction_date }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

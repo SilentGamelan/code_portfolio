@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction History
+{% endblock %}
+
+{% block main %}
+{# NB: arguments sent with webpage through render_template() arguments are treated as an object #}
+{#     So, we are able to access them in the template via object .notation                      #}
+{#     Weirdly, not doing this (ie; row["pps"]) would lead to the value being coersed into str  #}
+{#     type which then broke the usd filter                                                     #}
+<div class="receipt-box">
+    <table>
+        <thead>
+            <tr>
+                <th> Transaction ID</th>
+                <th> Stock Symbol </th>
+                <th> Stock Amount </th>
+                <th> Price Per Share </th>
+                <th> Transaction Total </th>
+                <th> Transaction Date </th>
+                <th> Transaction Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in user_history %}
+            <tr>
+                <td>#{{ row.transaction_id }}</td>
+                <td>{{ row.symbol }}</td>
+                <td>{{ row.shares_amount }}</td>
+                <td>{{ row.pps | usd }}</td>
+                <td>{{ row.total | usd  }}</td>
+                <td>{{ row.transaction_date }}</td>
+                <td>{{ row.transaction_type }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
